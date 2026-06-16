@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Симулятор ИТ-стартапа</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div>
+        <h1>Симулятор развития ИТ-стартапа</h1>
+        <p>
+          Учебный симулятор для анализа развития ИТ-стартапа. Принимайте управленческие решения 
+          и отслеживайте, как они влияют на пользователей, выручку, расходы, прибыль 
+          и эффективность привлечения пользователей.
+        </p>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card">
+        <h2>Исходные параметры</h2>
+        <p class="section-note">
+        Введите основные параметры стартапа. В подсказках указаны пояснения и рекомендуемые диапазоны значений. 
+         Расширенные настройки заполнены автоматически, поэтому их лучше не менять без необходимости.
+        </p>
+
+        <div class="form-grid">
+          <label>
+            <span>Название стартапа</span>
+            <input type="text" id="startupName" />
+          </label>
+
+          <label>
+            <span>Начальный капитал <button type="button" class="hint-btn" data-hint="capital">?</button></span>
+            <input type="number" id="capital" max="8000000" min="0"/>
+          </label>
+
+          <label>
+            <span>Количество сотрудников <button type="button" class="hint-btn" data-hint="employees">?</button></span>
+            <input type="number" id="employees" max="8" min="1" step="1" />
+          </label>
+
+          <label>
+            <span>Средняя зарплата сотрудника <button type="button" class="hint-btn" data-hint="salary">?</button></span>
+            <input type="number" id="salary" max="150000" min="40000" step="1" />
+          </label>
+
+          <label>
+            <span>Фиксированные расходы в месяц <button type="button" class="hint-btn" data-hint="fixedCosts">?</button></span>
+            <input type="number" id="fixedCosts" max="300000" min="50000" step="10000" />
+          </label>
+
+          <label>
+            <span>Маркетинговый бюджет в месяц <button type="button" class="hint-btn" data-hint="marketing">?</button></span>
+            <input type="number" id="marketing" min="0" step="10000" />
+          </label>
+
+          <label>
+            <span>Цена продукта в месяц <button type="button" class="hint-btn" data-hint="price">?</button></span>
+            <input type="number" id="price" max="8000" min="400" />
+          </label>
+        </div>
+
+        <details class="advanced-settings">
+          <summary>Расширенные настройки модели</summary>
+          <div class="form-grid advanced-grid">
+            <label>
+              <span>Стартовые пользователи <button type="button" class="hint-btn" data-hint="users">?</button></span>
+              <input type="number" id="users" value="150" min="0" step="10" />
+            </label>
+            <label>
+              <span>Базовый CAC <button type="button" class="hint-btn" data-hint="cac">?</button></span>
+              <input type="number" id="cac" value="2200" min="100" step="100" />
+            </label>
+            <label>
+              <span>Базовое удержание, % <button type="button" class="hint-btn" data-hint="retention">?</button></span>
+              <input type="number" id="retention" value="70" min="30" max="95" step="1" />
+            </label>
+            <label>
+              <span>Базовая конверсия в платящих, % <button type="button" class="hint-btn" data-hint="conversion">?</button></span>
+              <input type="number" id="conversion" value="22" min="5" max="30" step="1" />
+            </label>
+          </div>
+        </details>
+
+        <div class="controls">
+          <button id="startBtn" class="primary">Запустить симуляцию</button>
+          <button id="resetBtn" class="secondary">Сбросить</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Управленческие решения на месяц</h2>
+        <p class="section-note">
+          Решения меняют метрики косвенно. Маркетинг помогает привлекать новых пользователей, вложения в продукт улучшают удержание и конверсию, найм развивает продукт, а изменение цены влияет на выручку и спрос.
+        </p>
+
+        <div class="decision-grid">
+          <label>
+            Маркетинг, ₽
+            <input type="range" id="marketingBudget" min="0" max="700000" step="5000" value="0" />
+            <strong id="marketingBudgetValue">0 ₽</strong>
+          </label>
+
+          <label>
+            Найм сотрудников
+            <input type="range" id="hireCount" min="0" max="5" value="0" />
+            <strong id="hireCountValue">0</strong>
+          </label>
+
+          <label>
+            Вложение в развитие продукта, ₽
+            <input type="range" id="productInvestment" min="0" max="350000" step="5000" value="0" />
+            <strong id="productInvestmentValue">0 ₽</strong>
+          </label>
+
+          <label>
+            Изменение цены, %
+            <input type="range" id="priceChange" min="-30" max="50" step="1" value="0" />
+            <strong id="priceChangeValue">0%</strong>
+          </label>
+
+          <label>
+            Сокращение расходов, %
+            <input type="range" id="costOptimization" min="0" max="35" step="1" value="0" />
+            <strong id="costOptimizationValue">0%</strong>
+          </label>
+
+          <label class="investment-option">
+            <span>Привлечь инвестиции <button type="button" class="hint-btn" data-hint="investment">?</button></span>
+            <select id="raiseInvestment">
+              <option value="0">Не привлекать</option>
+              <option value="500000">+500 000 ₽ за 20% будущей прибыли</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="controls">
+          <button id="nextBtn" class="primary" disabled>Следующий месяц</button>
+        </div>
+      </section>
+
+      <section class="card full-width">
+        <h2>Ключевые показатели</h2>
+        <div class="metrics" id="metrics">
+          <div class="metric"><span>Фаза <button type="button" class="hint-btn metric-hint-btn" data-hint="metricPhase">?</button></span><strong id="mPhase">—</strong></div>
+          <div class="metric"><span>Капитал <button type="button" class="hint-btn metric-hint-btn" data-hint="metricCapital">?</button></span><strong id="mCapital">—</strong></div>
+          <div class="metric"><span>Пользователи <button type="button" class="hint-btn metric-hint-btn" data-hint="metricUsers">?</button></span><strong id="mUsers">—</strong></div>
+          <div class="metric"><span>Платящие пользователи <button type="button" class="hint-btn metric-hint-btn" data-hint="metricPayingUsers">?</button></span><strong id="mPayingUsers">—</strong></div>
+          <div class="metric"><span>Выручка <button type="button" class="hint-btn metric-hint-btn" data-hint="metricRevenue">?</button></span><strong id="mRevenue">—</strong></div>
+          <div class="metric"><span>Расходы <button type="button" class="hint-btn metric-hint-btn" data-hint="metricExpenses">?</button></span><strong id="mExpenses">—</strong></div>
+          <div class="metric"><span>Прибыль / убыток <button type="button" class="hint-btn metric-hint-btn" data-hint="metricProfit">?</button></span><strong id="mProfit">—</strong></div>
+          <div class="metric"><span>Запас времени <button type="button" class="hint-btn metric-hint-btn" data-hint="metricRunway">?</button></span><strong id="mRunway">—</strong></div>
+          <div class="metric"><span>CAC <button type="button" class="hint-btn metric-hint-btn" data-hint="metricCac">?</button></span><strong id="mCac">—</strong></div>
+          <div class="metric"><span>LTV <button type="button" class="hint-btn metric-hint-btn" data-hint="metricLtv">?</button></span><strong id="mLtv">—</strong></div>
+          <div class="metric"><span>LTV / CAC <button type="button" class="hint-btn metric-hint-btn" data-hint="metricRatio">?</button></span><strong id="mRatio">—</strong></div>
+          <div class="metric"><span>Доля инвестора <button type="button" class="hint-btn metric-hint-btn" data-hint="metricInvestor">?</button></span><strong id="mInvestorShare">—</strong></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Итог месяца</h2>
+        <div id="monthSummary" class="recommendations">Сначала запустите симуляцию.</div>
+      </section>
+
+      <section class="card">
+        <h2>Рекомендации системы</h2>
+        <div id="recommendations" class="recommendations">Сначала запустите симуляцию.</div>
+      </section>
+
+      <section class="card">
+        <h2>График капитала</h2>
+        <canvas id="chart" width="560" height="260"></canvas>
+      </section>
+
+      <section class="card full-width">
+        <h2>Журнал симуляции</h2>
+        <div id="log" class="log"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="hintModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content">
+      <button type="button" id="closeHintModal" class="modal-close">×</button>
+      <h3 id="hintTitle">Подсказка</h3>
+      <p id="hintText"></p>
+      <p id="hintRange" class="hint-range"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
